@@ -1,11 +1,31 @@
 #### Bitacora LSTM
 
-Entrenar muchas epochs > 1000 con lr as bajo 0.001 para que overfitee
+16 abril
+Deje corriendo un grid search con 162 experimentos y con toda la data.
 
+Los resultados muestran que la mejor configuracion es la siguiente
+
+hps = {'batch_size': 14,
+ 'hidden_size': 25,
+ 'lookback': 28,
+ 'lr': 0.0003,
+ 'n_epochs': 300,
+ 'num_layers': 1,
+ 'output_size': 1,
+ 'final_train_loss': 0.013162605464458466,
+ 'final_test_loss': 0.024842604994773865,
+ 'train_time': 15.378505945205688}}
+
+**Notas**:
+
+* Creo que puede ser una buena decision probar con 500 epochs.
+* Hace falta revisar lo del input_size = lookback. Por qu'e funciona? Probar con input_size = 1
 
 
 
 15 abril
+Entrenar muchas epochs > 1000 con lr as bajo 0.001 para que overfitee
+
 ##### Configuraciones que parecen estar funcionando sobre un dataset peque;o
 
 lookback=1
