@@ -9,7 +9,6 @@ import warnings
 import torch
 from torch.utils.data import Dataset, TensorDataset, IterableDataset, DataLoader
 import torch.nn as nn
-from sklearn.preprocessing import MinMaxScaler
 import math
 from utils import process_file, create_dataset
 import torch.optim as optim

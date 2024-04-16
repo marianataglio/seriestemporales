@@ -46,8 +46,8 @@ def train_model(model, loader, optimizer, loss_fn, n_epochs=100, print_interval=
         # Calculate RMSE for each epoch
         epoch_train_rmse = np.sqrt(epoch_train_rmse / num_samples)
 
-        if (epoch + 1) % print_interval == 0:
-            print(f"Epoch {epoch+1}/{n_epochs}, Train Loss: {epoch_train_loss:.4f},  Train RMSE: {epoch_train_rmse:.4f}")
+        #if (epoch + 1) % print_interval == 0:
+           # print(f"Epoch {epoch+1}/{n_epochs}, Train Loss: {epoch_train_loss:.4f},  Train RMSE: {epoch_train_rmse:.4f}")
 
         train_loss.append(epoch_train_loss)
         train_rmse.append(epoch_train_rmse)

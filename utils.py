@@ -82,7 +82,6 @@ class LogMaxAbsScaler:
 
 def scale_data(X_train, X_test, y_train, y_test, scaler_cls=MaxAbsScaler):
     # Scale X data
-
     scaler_x = scaler_cls()
 
     X_train_scaled = scaler_x.fit_transform(X_train.squeeze().numpy().reshape(-1, 1)).reshape(X_train.shape)
