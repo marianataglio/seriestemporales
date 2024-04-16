@@ -27,11 +27,8 @@ def process_file():
     df_shorten = df[df['date'] >= fecha_limite].copy()
     bicis_por_dia = df_shorten.groupby('date').bici_id_usuario.count().resample('D').sum()
 
-    df_trimmed = df_shorten[df_shorten['date'] <= pd.to_datetime('2017-01-01 23:59:59')].copy()
+    df_trimmed = df_shorten[df_shorten['date'] <= pd.to_datetime('2017-12-01 23:59:59')].copy()
     bicis_por_dia_trimmed = df_trimmed.groupby('date').bici_id_usuario.count().resample('D').sum()
-    
-    #df_trimmed = df_shorten[df_shorten['date'] <= pd.to_datetime('2017-12-01 23:59:59')].copy()
-    #bicis_por_dia_trimmed = df_trimmed.groupby('date').bici_id_usuario.count().resample('D').sum()
     
     X = bicis_por_dia_trimmed
     X = pd.DataFrame(X)
