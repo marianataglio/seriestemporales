@@ -1,6 +1,16 @@
 #### Bitacora LSTM
 
-16 abril
+**16 abril [2]**
+
+* Entrenar con *input_size* degrada la loss de test si comparamos contra el mejor modelo.
+  **test:** [0.02837352640926838], **train:** [0.012270266190171242]
+
+* Misma config pero con *input_size* = lookback (28) 
+  **test:** [0.024842604994773865], **train:** [0.013162605464458466]
+
+
+
+**16 abril [1]**
 Deje corriendo un grid search con 162 experimentos y con toda la data.
 
 Los resultados muestran que la mejor configuracion es la siguiente
@@ -22,11 +32,10 @@ hps = {'batch_size': 14,
 * Hace falta revisar lo del input_size = lookback. Por qu'e funciona? Probar con input_size = 1
 
 
-
-15 abril
+**15 abril**
 Entrenar muchas epochs > 1000 con lr as bajo 0.001 para que overfitee
 
-##### Configuraciones que parecen estar funcionando sobre un dataset peque;o
+* Configuraciones que parecen estar funcionando sobre un dataset peque;o
 
 lookback=1
 X_train, y_train = create_dataset(train, lookback=lookback)
@@ -53,12 +62,6 @@ num_layers tiene que estar entre 1 y 2 para esta cantidad de datos
 Empeora
 
 #### Voy a probar con loockback 7, red 7,50,1, lr=0.1
-
-
-
-
-
-
 
 
 ##### **1. Min Max Scaler fit_transform en x_train y x_test**
@@ -211,17 +214,11 @@ Tegno que revisar como hacer el hidden state.reset
 6. Dataloader.shuffle=True
 7. batch_size = 64
 
+Graficar la norma del gradiente, ver si tengo exploding gradients 
 
 
 #### Pareceria que el scaling sobre train y test no esta bueno, vamos a probar otra cosa usar stndard scalar
 
 
-
-
-##### Probar diferenciar la serie, fitear LSTM. el rdo me va a dar las derivadas, tengo que sumarlas, para integrarlo. 
-
-
-
-Graficar la norma del gradiente, ver si tengo exploding gradients 
-https://machinelearningmastery.com/backtest-machine-learning-models-time-series-forecasting/y
+##### Probar diferenciar la serie, fitear LSTM. el rdo me va a dar las derivadas, tengo que sumarlas, para integrarlo?? (validar esta idea) Low priority
 
