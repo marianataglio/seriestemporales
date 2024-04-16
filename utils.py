@@ -29,8 +29,11 @@ def process_file():
 
     df_trimmed = df_shorten[df_shorten['date'] <= pd.to_datetime('2017-12-01 23:59:59')].copy()
     bicis_por_dia_trimmed = df_trimmed.groupby('date').bici_id_usuario.count().resample('D').sum()
-    
-    X = bicis_por_dia_trimmed
+
+    return bicis_por_dia_trimmed
+
+def series_to_array(series):
+    X = series
     X = pd.DataFrame(X)
     #X = X.reset_index()
     
