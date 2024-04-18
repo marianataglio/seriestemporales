@@ -75,16 +75,20 @@ def evaluate_model_last_prediction(model, X_train, y_train, X_test, y_test, scal
         y_pred_train = model(X_train)
         # Keep the last prediction of the lookback window
         y_pred_train_unscaled = scaler_y.inverse_transform(y_pred_train[:, -1, :].detach().numpy().reshape(-1, 1))
+        y_train_unscaled = scaler_y.inverse_transform(y_train[:, -1, :].detach().numpy().reshape(-1, 1))
+        
         train_preds.append(y_pred_train_unscaled)
         train_loss.append(loss_fn(y_pred_train, y_train).item())
-        train_rmse.append(np.sqrt(loss_fn(y_pred_train, y_train).item()))
+        train_rmse.append(np.sqrt(loss_fn(y_pred_train_unscaled, y_train_unscaled).item()))
 
         # Predictions and evaluation on test set
         y_pred_test = model(X_test)
         # Keep the last prediction of the lookback window
         y_pred_test_unscaled = scaler_y.inverse_transform(y_pred_test[:, -1, :].detach().numpy().reshape(-1, 1))
+        y_test_unscaled = scaler_y.inverse_transform(y_test[:, -1, :].detach().numpy().reshape(-1, 1))
+        
         test_preds.append(y_pred_test_unscaled)
         test_loss.append(loss_fn(y_pred_test, y_test).item()) 
-        test_rmse.append(np.sqrt(loss_fn(y_pred_test, y_test).item()))
+        test_rmse.append(np.sqrt(loss_fn(y_pred_test_unscaled, y_test_unscaled).item()))
 
     return train_preds, train_loss, test_loss, train_rmse, test_rmse, test_preds
