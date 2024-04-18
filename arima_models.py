@@ -1,6 +1,7 @@
 from imports import *
 
-def arima_forecast(train, test, order=(7, 1, 7)):
+from scipy.special import boxcox, inv_boxcox
+def arima_forecast(train, test, order=(7, 1, 7), box_cox_lambda=None):
     # Fit ARIMA model
     arima_model = sm.tsa.ARIMA(train, order=order).fit()
 
@@ -10,9 +11,17 @@ def arima_forecast(train, test, order=(7, 1, 7)):
     test_values = test.values
     
     # Calculate RMSE
-    rmse = sqrt(mean_squared_error(test_values, predictions_values))
-    print('Test RMSE: %.3f' % rmse)
-    
+
+    if box_cox_lambda is not None:
+        inverse_test_values = inv_boxcox(test, box_cox_lambda)
+        inverse_preds = inv_boxcox(predictions_values, box_cox_lambda)
+        rmse = sqrt(mean_squared_error(inverse_test_values, inverse_preds))
+        print('Test RMSE: %.3f' % rmse)
+
+    else:
+        rmse = sqrt(mean_squared_error(test_values, predictions_values))
+        print('Test RMSE: %.3f' % rmse)
+        
     # Plot predictions vs actual values
     plt.figure(figsize=(8, 2.5))
     plt.plot(test_values, label='Test')
@@ -54,8 +63,8 @@ def arima_rolling_forecast(train, test, order=(7, 1, 7)):
     
     return arima_rolling_forecast
 
-
-def sarima_forecast(train, test, order=(7, 1, 7), seasonal_order=(4,1,4,28)):
+from scipy.special import boxcox, inv_boxcox
+def sarima_forecast(train, test, order=(7, 1, 7), seasonal_order=(4,1,4,28), box_cox_lambda=None):
     sarima_forecast = sm.tsa.SARIMAX(train, order=order, seasonal_order=seasonal_order, missing='raise').fit()
     
     # Forecast
@@ -64,8 +73,15 @@ def sarima_forecast(train, test, order=(7, 1, 7), seasonal_order=(4,1,4,28)):
     test_values = test.values
     
     # Calculamos rmse
-    rmse = sqrt(mean_squared_error(test_values, predictions_values))
-    print('Test RMSE: %.3f' % rmse)
+    if box_cox_lambda is not None:
+        inverse_test_values = inv_boxcox(test, box_cox_lambda)
+        inverse_preds = inv_boxcox(predictions_values, box_cox_lambda)
+        rmse = sqrt(mean_squared_error(inverse_test_values, inverse_preds))
+        print('Test RMSE: %.3f' % rmse)
+
+    else:
+        rmse = sqrt(mean_squared_error(test_values, predictions_values))
+        print('Test RMSE: %.3f' % rmse)
     
     # Plot predictions vs actual values
     plt.figure(figsize=(8,2.5))
