@@ -23,7 +23,7 @@ def arima_forecast(train, test, order=(7, 1, 7), box_cox_lambda=None):
         print('Test RMSE: %.3f' % rmse)
         
     # Plot predictions vs actual values
-    plt.figure(figsize=(8, 2.5))
+    plt.figure(figsize=(6, 2.5))
     plt.plot(test_values, label='Test')
     plt.plot(predictions_values, color='red', label='Predictions')
     plt.title("ARIMA Forecast")
@@ -55,7 +55,7 @@ def arima_rolling_forecast(train, test, order=(7, 1, 7)):
     print('Test RMSE: %.3f' % rmse)
 
     # Plot predictions vs actual values
-    plt.figure(figsize=(8,2.5))
+    plt.figure(figsize=(6,2.5))
     plt.plot(test.values, label='Test')
     plt.plot(predictions, color='red', label='Predictions')
     plt.legend()
@@ -65,6 +65,7 @@ def arima_rolling_forecast(train, test, order=(7, 1, 7)):
 
 from scipy.special import boxcox, inv_boxcox
 def sarima_forecast(train, test, order=(7, 1, 7), seasonal_order=(4,1,4,28), box_cox_lambda=None):
+   
     sarima_forecast = sm.tsa.SARIMAX(train, order=order, seasonal_order=seasonal_order, missing='raise').fit()
     
     # Forecast
@@ -84,7 +85,7 @@ def sarima_forecast(train, test, order=(7, 1, 7), seasonal_order=(4,1,4,28), box
         print('Test RMSE: %.3f' % rmse)
     
     # Plot predictions vs actual values
-    plt.figure(figsize=(8,2.5))
+    plt.figure(figsize=(6,2.5))
     plt.plot(test_values, label='Test')
     plt.plot(predictions_values, color='red', label='Predictions')
     plt.title("Sarima Forecast")

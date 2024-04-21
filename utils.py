@@ -35,7 +35,7 @@ def process_file():
 def series_to_array(series):
     X = series
     X = pd.DataFrame(X)
-    #X = X.reset_index()
+    X = X.reset_index()
     
     timeseries = X['bici_id_usuario'].values.astype('float32')
     timeseries = timeseries.reshape(-1, 1)
