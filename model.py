@@ -10,9 +10,8 @@ class LSTMModel(nn.Module):
         x, _ = self.lstm(x)
         x = self.linear(x)
         return x
-
+        
 def train_model(model, loader, optimizer, loss_fn, n_epochs=100, print_interval=10, seed=None):
-    # Set random seed if provided
     if seed is not None:
         torch.manual_seed(seed)
         np.random.seed(seed)
@@ -26,6 +25,7 @@ def train_model(model, loader, optimizer, loss_fn, n_epochs=100, print_interval=
         epoch_train_rmse = 0.0
         num_samples = 0
         for X_batch, y_batch in loader:
+            
             # Forward pass
             y_pred = model(X_batch)
 
@@ -42,6 +42,7 @@ def train_model(model, loader, optimizer, loss_fn, n_epochs=100, print_interval=
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            
 
         # Calculate RMSE for each epoch
         epoch_train_rmse = np.sqrt(epoch_train_rmse / num_samples)
@@ -55,7 +56,6 @@ def train_model(model, loader, optimizer, loss_fn, n_epochs=100, print_interval=
     return train_loss, train_rmse
 
 import torch
-
 def evaluate_model_last_prediction(model, X_train, y_train, X_test, y_test, scaler_y, loss_fn):
     train_preds = []
     train_loss = []
@@ -76,6 +76,8 @@ def evaluate_model_last_prediction(model, X_train, y_train, X_test, y_test, scal
         # Keep the last prediction of the lookback window
         y_pred_train_unscaled = scaler_y.inverse_transform(y_pred_train[:, -1, :].detach().numpy().reshape(-1, 1))
         y_train_unscaled = scaler_y.inverse_transform(y_train[:, -1, :].detach().numpy().reshape(-1, 1))
+        y_train_unscaled = torch.tensor(y_train_unscaled)
+        y_pred_train_unscaled = torch.tensor(y_pred_train_unscaled)
         
         train_preds.append(y_pred_train_unscaled)
         train_loss.append(loss_fn(y_pred_train, y_train).item())
@@ -86,6 +88,9 @@ def evaluate_model_last_prediction(model, X_train, y_train, X_test, y_test, scal
         # Keep the last prediction of the lookback window
         y_pred_test_unscaled = scaler_y.inverse_transform(y_pred_test[:, -1, :].detach().numpy().reshape(-1, 1))
         y_test_unscaled = scaler_y.inverse_transform(y_test[:, -1, :].detach().numpy().reshape(-1, 1))
+        y_test_unscaled = torch.tensor(y_test_unscaled)
+        y_pred_test_unscaled = torch.tensor(y_pred_test_unscaled)
+
         
         test_preds.append(y_pred_test_unscaled)
         test_loss.append(loss_fn(y_pred_test, y_test).item()) 

@@ -1,12 +1,20 @@
 #### Bitacora LSTM
 
+
+**16 abril [3]**
+Deberia dejar corriendo un grid search pero manteniendo input size=1.
+Lo voy a dejar para despues. Los resultados actuales son suficientemente buenos.
+
 **16 abril [2]**
 
-* Entrenar con *input_size* degrada la loss de test si comparamos contra el mejor modelo.
-  **test:** [0.02837352640926838], **train:** [0.012270266190171242]
+* Entrenar con *input_size* = 1 degrada la loss de test si comparamos contra el mejor modelo. Pero es lo mejor que se puede hacer
+* porque si no tendriamos data leakage.
+    test: [0.02523963898420334] train: [0.013113126158714294]
 
-* Misma config pero con *input_size* = lookback (28) 
+* Misma config pero con *input_size* = lookback (28). Esto est conceptualmente incorrecto.
+  Porque solo tengo una feature (dia anterior)
   **test:** [0.024842604994773865], **train:** [0.013162605464458466]
+
 
 
 
